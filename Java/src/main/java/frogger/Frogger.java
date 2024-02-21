@@ -10,13 +10,13 @@ public class Frogger {
     // Field for task 1.
     private final Road road;
     private int position;
-    
+
     // Field for task 2. Anything to add/change?
     private final Records records;
     private String firstName, lastName, phoneNumber, zipCode, state, gender;
 
     public Frogger(Road road, int position, Records records, String firstName, String lastName, String phoneNumber,
-    String zipCode, String state, String gender) {
+            String zipCode, String state, String gender) {
         this.road = road;
         this.position = position;
         this.records = records;
@@ -45,14 +45,15 @@ public class Frogger {
 
     // TODO: Do you notice any issues here?
     public boolean isOccupied(int position) {
-        boolean[] occupied = this.road.getOccupied();
-        return occupied[position];
+        // does not need access to the entire occupied boolean list
+        boolean occupied = this.road.getOccupied(position);
+        return occupied;
     }
-    
+
     public boolean isValid(int position) {
-        if (position < 0) return false;
-        boolean[] occupied = this.road.getOccupied();
-        return position < occupied.length;
+        if (position < 0)
+            return false;
+        return position < this.road.getSize();
     }
 
     /**
@@ -61,8 +62,8 @@ public class Frogger {
      * @return true if record successful, else false.
      */
     public boolean recordMyself() {
-      boolean success = records.addRecord(firstName, lastName, phoneNumber, zipCode, state, gender);
-      return success;
+        boolean success = records.addRecord(firstName, lastName, phoneNumber, zipCode, state, gender);
+        return success;
     }
 
 }
